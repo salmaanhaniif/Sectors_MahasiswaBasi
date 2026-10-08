@@ -54,6 +54,9 @@ describe("Vercel snapshot URLs", () => {
     expect(snapshotRequestUrl("out", "stocks/PGEO", "/snapshots")).toBe(
       "/snapshots/out/stocks/PGEO.json",
     );
+    expect(snapshotRequestUrl("video", "meta", "/snapshots")).toBe(
+      "/snapshots/video/meta.json",
+    );
   });
 });
 

@@ -8,7 +8,8 @@ import type {
   Stock,
 } from "../types/contracts";
 
-const sourceNames: Source[] = ["out", "fixtures", "sample"];
+const sourceNames: Source[] = ["out", "video", "fixtures", "sample"];
+const automaticSources: Source[] = ["out", "fixtures", "sample"];
 const apiBaseUrl = (import.meta.env.VITE_API_BASE_URL || "")
   .trim()
   .replace(/\/+$/, "");
@@ -76,8 +77,8 @@ export async function loadSnapshot(
   signal?: AbortSignal,
 ): Promise<Snapshot> {
   if (requested && !sourceNames.includes(requested as Source))
-    throw new Error("Unknown source. Use out, fixtures, or sample.");
-  const sources = requested ? [requested as Source] : sourceNames;
+    throw new Error("Unknown source. Use out, video, fixtures, or sample.");
+  const sources = requested ? [requested as Source] : automaticSources;
   for (const source of sources) {
     let meta: Meta;
     try {

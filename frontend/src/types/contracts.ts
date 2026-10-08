@@ -1,5 +1,5 @@
 // Mirrors backend/radar/export/schemas. Keep JSON key names unchanged.
-export type Source = "out" | "fixtures" | "sample";
+export type Source = "out" | "video" | "fixtures" | "sample";
 export type Horizon = "daily" | "investor";
 export type DailyEntry = {
   symbol: string;

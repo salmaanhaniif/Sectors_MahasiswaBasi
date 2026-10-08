@@ -19,7 +19,7 @@ from jsonschema.exceptions import ValidationError
 from radar import config
 from radar.export.validation import validate
 
-Source = Literal["out", "fixtures", "sample"]
+Source = Literal["out", "video", "fixtures", "sample"]
 Horizon = Literal["daily", "weekly"]
 
 
@@ -30,6 +30,7 @@ def create_app(
     """Build a service with injectable directories for offline tests."""
     directories = source_directories if source_directories is not None else {
         "out": config.OUT_DIR,
+        "video": config.OUT_DIR / "history" / "2026-10-02",
         "fixtures": config.FIXTURES_DIR / "out",
         "sample": config.DATA_DIR / "demo",
     }

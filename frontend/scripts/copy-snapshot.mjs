@@ -4,8 +4,6 @@ import { fileURLToPath } from "node:url";
 
 const frontendRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const repositoryRoot = resolve(frontendRoot, "..");
-const sourceRoot = resolve(repositoryRoot, "data", "out");
-const targetRoot = resolve(frontendRoot, "dist", "snapshots", "out");
 const files = [
   "meta.json",
   "daily.json",
@@ -14,14 +12,36 @@ const files = [
   "brief_weekly.json",
 ];
 
-await rm(targetRoot, { recursive: true, force: true });
-await mkdir(targetRoot, { recursive: true });
+const snapshots = [
+  { name: "out", source: resolve(repositoryRoot, "data", "out") },
+  {
+    name: "video",
+    source: resolve(
+      repositoryRoot,
+      "data",
+      "out",
+      "history",
+      "2026-10-02",
+    ),
+  },
+];
 
-for (const file of files)
-  await cp(resolve(sourceRoot, file), resolve(targetRoot, file));
+for (const snapshot of snapshots) {
+  const target = resolve(
+    frontendRoot,
+    "dist",
+    "snapshots",
+    snapshot.name,
+  );
+  await rm(target, { recursive: true, force: true });
+  await mkdir(target, { recursive: true });
 
-await cp(resolve(sourceRoot, "stocks"), resolve(targetRoot, "stocks"), {
-  recursive: true,
-});
+  for (const file of files)
+    await cp(resolve(snapshot.source, file), resolve(target, file));
 
-console.log("Copied frozen market snapshot to dist/snapshots/out.");
+  await cp(resolve(snapshot.source, "stocks"), resolve(target, "stocks"), {
+    recursive: true,
+  });
+}
+
+console.log("Copied current and video snapshots to dist/snapshots.");

@@ -240,6 +240,8 @@ function Workspace({ snapshot }: { snapshot: Snapshot }) {
             <span className="source-tag">
               {snapshot.source === "out"
                 ? "EXPORTED MARKET DATA"
+                : snapshot.source === "video"
+                  ? "HISTORICAL MARKET DATA"
                 : snapshot.source === "fixtures"
                   ? "ILLUSTRATIVE FIXTURES"
                   : "DEMO · PLACEHOLDER SCORES"}
@@ -268,7 +270,7 @@ function Workspace({ snapshot }: { snapshot: Snapshot }) {
             </a>
           ))}
         </div>
-        {snapshot.source !== "out" && (
+        {snapshot.source !== "out" && snapshot.source !== "video" && (
           <div className="wrap banner">
             {snapshot.source === "fixtures"
               ? "Illustrative five-stock dataset for demonstration. These are sample scores."
